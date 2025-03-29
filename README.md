@@ -1,4 +1,4 @@
-### 9. Medical Image Classification using Deep Learning
+### Medical Image Classification using Deep Learning
 
 In the past few decades, developments in medical imaging technology and the increased role of imaging within the diagnostic process have resulted in a rapid expansion of recorded medical visual data, generating a need for novel computational models.
 
