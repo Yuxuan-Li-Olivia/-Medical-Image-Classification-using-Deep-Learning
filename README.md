@@ -16,7 +16,8 @@ COVID-19 Medical Image Classification/
         model_utils.py      # 模型构建
         train_utils.py      # 训练与评估
         visualize.py        # 可视化
-    covid19_app.py            # 主脚本
+    covid19_app.py          # 主脚本
+    visualization_pics/     #可视化结果图片展示
     covid19_rawdata/
         COVID-19+Aug+CGAN/  # 数据集
             train+Aug+CGAN/
