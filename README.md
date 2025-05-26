@@ -1,23 +1,105 @@
-### Medical Image Classification using Deep Learning
+# COVID-19 Medical Image Classification
 
-In the past few decades, developments in medical imaging technology and the increased role of imaging within the diagnostic process have resulted in a rapid expansion of recorded medical visual data, generating a need for novel computational models.
+## 项目简介
 
-Deep learning is a subset of artificial intelligence that involves creating neural networks that can learn and make predictions based on complex and large data sets. In radiology, deep learning allows for more accurate and precise diagnosis of cancer, as it can analyze large amounts of medical imaging data and detect subtle abnormalities that may be missed by the human eye.
+使用 ResNet 对 COVID-19 胸部 CT 图像进行分类，支持数据加载、模型训练、评估和可视化。
 
-For such a project, you need to learn the machine learning or deep learning algorithms, such as convolutional neural networks, for the classification task. And you should use the frameworks like `pytorch`/`tensorflow` to aid your development.
+---
 
-And finally, you need to describe your model for predicting/classification through visualization.
+## 项目结构
 
-- Esteva, A. et al. "Dermatologist-level classification of skin cancer with deep neural networks." Nature 542.7639 (2017): 115-118.
+```
+COVID-19 Medical Image Classification/
+    covid19_vision/
+        __init__.py
+        data_utils.py       # 数据加载
+        model_utils.py      # 模型构建
+        train_utils.py      # 训练与评估
+        visualize.py        # 可视化
+    covid19_app.py            # 主脚本
+    covid19_rawdata/
+        COVID-19+Aug+CGAN/  # 数据集
+            train+Aug+CGAN/
+            val+Aug+CGAN/
+            test/
+```
 
-- Wang, Q., et al. "Deep learning for image-based cancer detection and diagnosis—a survey." Pattern Recognition 98 (2020): 107038.
+---
 
-- Liu, Y., et al. "Deep learning in medical ultrasound analysis: a review." Engineering 6.3 (2020): 291-318.
+## 快速开始
 
-- Razzak, M. I., et al. "Deep learning for breast cancer diagnosis: A review." IEEE Access 7 (2019): 172209-172237.
+### 1. 安装依赖
 
-- Litjens, G., et al. "A survey on deep learning in medical image analysis." Medical image analysis 42 (2017): 60-88.
+```bash
+pip install torch torchvision matplotlib seaborn scikit-learn
+```
 
-- Shen, D., et al. "Deep learning in medical image analysis." Annual Review of Biomedical Engineering 19 (2017): 221-248.
+### 2. 数据集问题
 
-- Sahiner, B., et al. "Deep learning in medical imaging and radiation therapy." Medical Physics 44.9 (2017): e1-e36.
+我们已经从 [Kaggle](https://www.kaggle.com/datasets/mloey1/covid19-chest-ct-image-augmentation-gan-dataset) 下载数据集，解压到 `./COVID-19/COVID-19+Aug+CGAN` 目录，您无需进行额外操作。
+
+### 3. 运行主脚本
+
+```bash
+python covid19_app.py --data_dir ./COVID-19/COVID-19+Aug+CGAN --image_size 256 --batch_size 8 --num_epochs 15 --lr 0.01 --device cuda
+```
+
+#### 参数说明
+
+- `--data_dir`：数据集路径，默认为 `./COVID-19/COVID-19+Aug+CGAN`。
+- `--image_size`：图像大小，默认为 256。
+- `--batch_size`：批量大小，默认为 8。
+- `--num_epochs`：训练轮数，默认为 15。
+- `--lr`：学习率，默认为 0.01。
+- `--device`：训练设备（`cuda` 或 `cpu`），默认为 `cuda`（如果可用）。
+
+---
+
+## 模块说明
+
+### 1. 数据加载
+
+```python
+from covid19_vision import load_data
+
+train_loader, val_loader, test_loader = load_data(data_dir="./COVID-19/COVID-19+Aug+CGAN", image_size=256, batch_size=8)
+```
+
+### 2. 模型构建
+
+```python
+from covid19_vision import build_resnet
+
+model = build_resnet()
+```
+
+### 3. 训练与评估
+
+```python
+from covid19_vision import train_model
+
+train_losses, train_accs, val_accs = train_model(model, train_loader, val_loader, num_epochs=15, lr=0.01, device="cuda")
+```
+
+### 4. 可视化
+
+```python
+from covid19_vision import plot_training_curves, plot_confusion_matrix
+
+plot_training_curves(train_losses, train_accs, val_accs)
+plot_confusion_matrix(model, test_loader, device="cuda")
+```
+
+---
+
+## 注意事项
+
+1. 确保数据集路径正确。
+2. 如需 GPU 支持，请安装 CUDA 和 cuDNN。
+3. 更多问题，请参考报告。
+
+---
+
+## 许可证
+
+MIT License.
