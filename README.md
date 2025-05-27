@@ -104,4 +104,9 @@ plot_confusion_matrix(model, test_loader, device="cuda")
 
 ## 许可证
 
-MIT License.
+MIT Licens
+
+## 贡献者
+李昱萱
+杨润泽
+赵悦含
